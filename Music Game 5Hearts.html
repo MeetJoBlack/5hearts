@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เกมทายเพลง - Music Quiz Presentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="https://gc.kes.v2.scr.kaspersky-labs.com/7EA5E9BB-55E1-4C31-9C21-4943DDFED2E4/main.js?attr=rfvHHRja2oJaveFwkvPSQxRWTT7HPUu7lIRJMb8nhgfeUnQ2K2NWhBLBibCJR1hqnA_gKH7J7vFZ_s1bXCqidGnC55xd644NGU9OO5AGOe7zWzwRMhGbG55h7jsQ9eq8qMFZuUsKOpSemD1Dx3Wl6IUHgGFT2lK9PoHbJcPZVPARTqxGM8_-bqxZxm-vPpGeuQt1pSBimsIXb532xtQmlM4fczonq3vxS-7PKghZG72Gyb9HGV44izmkhu7A_m08hot7vHUmqfhV6TWps1gIuUaBG3p1tD_dEvxn1W6cKtQUtzbh_RZJSOMKIGZje17s" charset="UTF-8"></script><style>
+        :root {
+            --bg-dark: #090d16;
+            --card-bg: radial-gradient(circle at 50% 30%, #1e293b 0%, #0f172a 100%);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-blue: #38bdf8;
+            --accent-indigo: #6366f1;
+            --accent-gold: #fbbf24;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Prompt', 'Sarabun', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ---------------- VIEW 1: HOME / LANDING SCREEN ---------------- */
+        #homeView {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            position: relative;
+            background: radial-gradient(circle at center, #1e293b 0%, #090d16 100%);
+            overflow-y: auto;
+        }
+
+        .home-container {
+            max-width: 1080px;
+            width: 100%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .home-title {
+            font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+            text-shadow: 0 10px 30px rgba(56, 189, 248, 0.2);
+        }
+
+        .home-subtitle {
+            font-size: clamp(1rem, 1.8vw, 1.3rem);
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-top: -16px;
+        }
+
+        .list-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 960px;
+        }
+
+        
+        .home-list-card.card-notice {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+        }
+        .home-list-card.card-notice:hover {
+            background: rgba(30, 41, 59, 0.6);
+            border-color: rgba(245, 158, 11, 0.5);
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.15);
+        }
+        .notice-icon {
+            background: rgba(245, 158, 11, 0.15) !important;
+            color: #fbbf24 !important;
+        }
+
+        .home-list-card {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            padding: 24px 18px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .home-list-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(99, 102, 241, 0.25));
+            border-color: rgba(56, 189, 248, 0.6);
+            box-shadow: 0 16px 35px rgba(56, 189, 248, 0.25);
+        }
+
+        .list-icon {
+            font-size: 2.2rem;
+            background: rgba(56, 189, 248, 0.15);
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-blue);
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
+        }
+
+        .list-card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .list-card-desc {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        /* ---------------- VIEW 2: QUIZ SLIDE VIEW ---------------- */
+        #quizView {
+            flex: 1;
+            display: none; /* toggled via JS */
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Top Header Container */
+        header {
+            background: rgba(15, 23, 42, 0.98);
+            border-bottom: 1px solid var(--border-color);
+            padding: 8px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            z-index: 50;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .list-tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+        }
+
+        .list-tab-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 5px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-family: inherit;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .list-tab-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+
+        .list-tab-btn.active {
+            background: linear-gradient(135deg, #0284c7, #4f46e5);
+            color: #ffffff;
+            border-color: transparent;
+            font-weight: 600;
+            box-shadow: 0 0 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tool-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .tool-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Numbers Navigation Row (1-15) */
+        .number-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding-top: 4px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.08);
+        }
+
+        .number-label {
+            font-size: 0.8rem;
+            color: #64748b;
+            font-weight: 500;
+            margin-right: 4px;
+        }
+
+        .song-num-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.04);
+            color: #cbd5e1;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: inherit;
+            transition: all 0.15s ease;
+        }
+
+        .song-num-btn:hover {
+            background: rgba(56, 189, 248, 0.2);
+            color: #38bdf8;
+            border-color: rgba(56, 189, 248, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .song-num-btn.active {
+            background: #38bdf8;
+            color: #04101e;
+            border-color: #38bdf8;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+            transform: scale(1.08);
+            font-weight: 700;
+        }
+
+        /* Slide Viewport */
+        #viewport {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 24px;
+            position: relative;
+            min-height: 0;
+        }
+
+        .slide-card {
+            width: 100%;
+            max-width: 1400px;
+            height: 100%;
+            background: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.7);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 32px;
+            overflow: hidden;
+        }
+
+        /* Top Bar inside Card */
+        .slide-top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            flex-shrink: 0;
+        }
+
+        .badge-and-answer-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .round-pill {
+            background: rgba(56, 189, 248, 0.15);
+            color: var(--accent-blue);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .question-number {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #f1f5f9;
+        }
+
+        /* Inline Answer directly after question number */
+        .inline-answer {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            padding: 4px 14px;
+            border-radius: 20px;
+        }
+
+        .inline-answer-label {
+            font-size: 0.8rem;
+            background: rgba(56, 189, 248, 0.25);
+            color: var(--accent-blue);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .inline-answer-song {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #38bdf8;
+        }
+
+        .inline-answer-divider {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .inline-answer-artist {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #e2e8f0;
+        }
+
+        /* Center Lyrics Display - Scrollable vertically */
+        .lyrics-scroll-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 16px 36px;
+            margin: 6px 0;
+        }
+
+        .lyrics-scroll-wrapper::-webkit-scrollbar {
+            width: 8px;
+        }
+        .lyrics-scroll-wrapper::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 4px;
+        }
+        .lyrics-scroll-wrapper::-webkit-scrollbar-thumb {
+            background: rgba(56, 189, 248, 0.3);
+            border-radius: 4px;
+        }
+        .lyrics-scroll-wrapper::-webkit-scrollbar-thumb:hover {
+            background: rgba(56, 189, 248, 0.5);
+        }
+
+        .lyrics-container {
+            width: 100%;
+            max-width: 1100px;
+            text-align: center;
+            margin: auto;
+        }
+
+        .lyrics-text {
+            color: #ffffff;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            white-space: pre-line;
+            text-shadow: 0 4px 25px rgba(0, 0, 0, 0.85);
+            word-break: break-word;
+            user-select: text;
+        }
+
+        /* Footer: Clean Navigation with Home/Index button */
+        footer {
+            background: rgba(15, 23, 42, 0.98);
+            border-top: 1px solid var(--border-color);
+            padding: 10px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 50;
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .btn-back-home {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.25));
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #fca5a5;
+            padding: 7px 18px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-back-home:hover {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: #ffffff;
+            border-color: transparent;
+            box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .progress-info {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #1e293b, #334155);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            padding: 7px 22px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(135deg, #0284c7, #2563eb);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= VIEW 1: HOME / INDEX (LIST SELECTOR) ================= -->
+    <div id="homeView">
+        <div class="home-container">
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                <h1 class="home-title">🎵 MUSIC QUIZ GAME</h1>
+                <p class="home-subtitle">เลือกรอบการแข่งขันเพื่อเริ่มเกมทายเพลง (15 เพลงต่อรอบ)</p>
+            </div>
+
+            <div class="list-grid" id="homeListGrid">
+                <!-- Rendered dynamically by JS: List 1 to 7 cards -->
+            </div>
+
+            <button class="tool-btn" id="btnHomeFullscreen" style="padding: 10px 24px; font-size: 0.95rem; border-radius: 12px;">
+                ⛶ โหมดเต็มหน้าจอ (Fullscreen)
+            </button>
+        </div>
+    </div>
+
+    <!-- ================= VIEW 2: QUIZ SLIDE VIEW ================= -->
+    <div id="quizView">
+        <!-- Header / Navigation Bar -->
+        <header>
+            <div class="header-top">
+                <div class="brand-title">
+                    <span>🎵 MUSIC QUIZ GAME</span>
+                </div>
+                <div class="list-tabs" id="listTabs">
+                    <!-- Rendered by JS -->
+                </div>
+                <div class="header-actions">
+                    <button class="tool-btn" id="btnFullscreen" title="กดปุ่ม F เพื่อเต็มจอ">⛶ เต็มจอ (F)</button>
+                </div>
+            </div>
+
+            <!-- 1-15 Quick Select Number Row -->
+            <div class="number-row" id="numberRow">
+                <span class="number-label">เลือกข้อ:</span>
+                <!-- Rendered by JS: 1 to 15 buttons -->
+            </div>
+        </header>
+
+        <!-- Main Slide -->
+        <main id="viewport">
+            <div class="slide-card">
+                <!-- Top Bar: Round + Number + Answer Inline -->
+                <div class="slide-top-bar">
+                    <div class="badge-and-answer-group">
+                        <span class="round-pill" id="badgeRound">ลิสต์ที่ 1</span>
+                        <span class="question-number" id="badgeNumber">ข้อที่ 1 / 15</span>
+                        <!-- Inline Answer directly after question number -->
+                        <div class="inline-answer">
+                            <span class="inline-answer-label">เฉลย</span>
+                            <span class="inline-answer-song" id="answerSong">ชื่อเพลง</span>
+                            <span class="inline-answer-divider">/</span>
+                            <span class="inline-answer-artist" id="answerArtist">ศิลปิน</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scrollable Center Lyrics -->
+                <div class="lyrics-scroll-wrapper" id="lyricsScrollWrapper">
+                    <div class="lyrics-container">
+                        <div class="lyrics-text" id="lyricsDisplay">
+                            กำลังโหลดเนื้อเพลง...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer Controls with Back to Home Button -->
+        <footer>
+            <div class="footer-left">
+                <button class="btn-back-home" id="btnBackToHome" title="กลับไปหน้าหลักเพื่อเลือกรายการเพลงใหม่">
+                    🏠 กลับหน้าแรก (เลือกลิสต์)
+                </button>
+                <div class="progress-info" id="progressInfo">
+                    ลิสต์ที่ 1 • ข้อที่ 1 / 15
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="nav-btn" id="btnPrev">◀ ก่อนหน้า</button>
+                <button class="nav-btn" id="btnNext">ถัดไป ▶</button>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const quizData = {"🎵 ลิสต์ที่ 1 (15 เพลง)": [{"num": 1, "title": "ขอใจเธอแลกเบอร์โทร", "artist": "หญิงลี ศรีจุมพล", "lyrics": "เบอร์โทรอื่นจะได้ยินเสียงรอสาย\nแบบแบบแบบว่าให้รอ\nแต่เบอร์นี้จะได้ยินเสียงใจบอกว่า\nท่านกำลังเข้าสู่บริการรับฝากหัวใจ\nลงทะเบียนฝากไว้ตัวเอากลับไปใจให้เก็บรักษา\nยอมจำนนเธอแล้ววันนี้แค่แรกเห็นหน้า\nฝากไว้กับฉันนะหัวใจของเธอ\nแลกเบอร์โทร โอ๊ะโอโอย"}, {"num": 2, "title": "ซมซาน", "artist": "Loso", "lyrics": "เกิดมาไม่เคยเจอใครเหมือนเธอ\nหลับฝันละเมอภาพเธอคอยหลอนทุกคืน\nหลับลงคราใดอยากนอนไม่ยอมตื่น\nก็ทุกค่ำคืนเจอเธอที่ปลายฟ้าไกล\nก็ได้แต่เพ้อแต่ฝันลมลม\nก็หลงชื่นชมโดยเธอไม่รู้ตัว\nเจอเธอทีไรจิตใจเต้นรัว\nฉันกลัวฉันกลัวกลัวเธอไม่สนใจ\nอยากเดินเข้าไปบอกว่ารักเธอ\nเวลาที่เจอที่เธอส่งยิ้มมา\nเหมือนดั่งโลกนี้สดใสขึ้นทันตา\nในช่วงเวลาที่ต้องการใคร\nเข้าใจสักคน"}, {"num": 3, "title": "ขี้หึง", "artist": "Silly Fools", "lyrics": "ยิ้มให้กับฉันหน่อย แค่หึงเล็กน้อยแค่คอยรัก\nได้โปรดอย่าโกรธฉัน ขนาดนั้น อีกนานคงขาดใจ\nและไม่ใช่ไม่ไว้ใจ ใจฉันร้อน หากใครมองนัก\nก็เธอดันน่ารัก ขนาดนั้น ให้มองอยู่ได้ไง\nช่วยเอียงมาหาหน่อย ฉันเฝ้าคอย ที่จะบอกรัก\nได้โปรดอย่าโกรธฉัน ที่ทำไปนั้น จะไม่ทำอีกต่อไป\n\nบางทีฉันก็ยั้งไม่อยู่ บางทีฉันก็รู้ แต่ทนไม่ไหว\nบางทีฉันใจร้อนเกินไป โปรดจงเข้าใจ ที่เป็นไปนะ\n(ที่เป็นไปนะ) เป็นไปด้วยรัก แต่อาจจะขี้หึงเกินไป\nแต่ใจทั้งใจมีแต่เธอคนเดียว รักเธอคนเดียว \nไม่ยอมให้ใครมาเปลี่ยนไป"}, {"num": 4, "title": "Play Girl", "artist": "ส้ม อมรา", "lyrics": "ก็ฉันชอบเที่ยวมันผิดหรือไง\nก็ฉันรักในเสียงดนตรี\nเมื่อไรโดนจังหวะดีดี\n1 2 3 4 ก็ถึงทีเฮ\nเอ อิ เย อิ เย อิ เย้\nเอ อิ เย อิ เย อิ เย\nเอ อิ เย อิ เย อิ เย้\nเอ อิ เย อิ เย อิ เย"}, {"num": 5, "title": "คนใจง่าย", "artist": "ไอซ์ ศรัณยู", "lyrics": "ติดใจเธอจนได้ ถูกใจเธอจนได้เมื่อเธอมาทำให้ จิตใจของฉันเต้นรัวยิ่งเจอก็ยิ่งชอบ ยิ่งชอบก็ยิ่งกลัวรู้ไหมคนดี\n\nบางทีเธอก็ใช่ บางทีก็ไม่ใช่ดูเธอมีใจให้ แต่บางทีเหมือนไม่มีก็เดาใจเธอยาก ไม่รู้ว่าที่จริงนั้นคิดยังไง\n\nอย่าทำให้รัก เดี๋ยวมันหลงเดี๋ยวมันรักฉันตั้งหลักไม่ทัน เดี๋ยวจะรั้งไว้ไม่ไหวรักมันปักหัวใจทำไง จะดึงออกไปก็ดึงไม่ออก\n\nอย่าทำให้คิด ถ้าไม่รักฉันสักนิดเข้าใจผิดขึ้นมา ฉันไม่รับผิดชอบมาทำให้เคลิ้มตลอด ถ้าเผลอไปกอดแล้วเธอจะว่ายังไง"}, {"num": 6, "title": "รักแท้...ยังไง", "artist": "น้ำชา ชีรณัฐ", "lyrics": "รักแท้ รักที่อะไร ตับไตไส้พุง\nหรือรักกางเกงที่นุ่ง ว่าดูสวยดี\nรักที่นามสกุล รักยี่ห้อรถยนต์\nรักเพราะว่าไม่จน มีสตางค์ให้จ่าย\nรักแท้ ต้องทำอะไร ต้องเดินห้างกัน\nกุ๊กกิ๊กซึ่งกันและกัน ไม่สนสายตาใคร\nซึ่งฉันไม่เข้าใจ ไม่ขอรักใครละกัน"}, {"num": 7, "title": "ละลาย", "artist": "โฟร์-มด", "lyrics": "ชุบปีดู ชุปชุปปีดู ลัลลัลล้า\nโวะโอะโอ โวะโอะโอ้\nชุบปีดู ชุปชุปปีดู ลัลลัลล้า\nโวะโอะโอ โวะโอะโอ้\n\nก็ใจมันหายละลายละลายละลายละไหลไปกับเธอ\nเฮ้อ เจออย่างเนี้ยคนอ่อนไหวอะวุ่นวาย\nก็ใจมันเพ้อ ละลอยละลอยละลอยละล่องไปอยู่ไหนอะ\nช่วยดูแลใจให้หน่อยเหอะนะ"}, {"num": 8, "title": "คุกเข่า", "artist": "Cocktail", "lyrics": "ฉันกำลังขอร้องอ้อนวอนเธออย่าไป\nทิ้งตัวลงคุกเข่ากอดขาเธอเอาไว้\nพนมสองมือขึ้นกราบกรานเธอโปรดอย่าไป\nมันคงไม่มีประโยชน์ ถ้าคนมันหมดใจ\n\nแต่ถ้าตัวเธอยังรัก ยังห่วงใย\nและถ้าอดีตของเรา ยังพอมีความหมาย\nได้โปรดอย่าจากฉันไป\nได้โปรดอย่าทำร้ายกันเลย"}, {"num": 9, "title": "รักแรก (First Love)", "artist": "นนท์ ธนนท์", "lyrics": "\"เธอสบายดีไหม\" เป็นคำถามที่ยังคงวนอยู่ซ้ำๆอยากรู้แค่เพียงเธออยู่ตรงนั้นที่ไม่มีฉัน ชีวิตเธอเป็นไงคิดถึงกันบ้างไหม ส่วนฉันก็คิดถึงเธออยู่ซ้ำๆก็หวังแค่เพียงเธออยู่ตรงนั้นจะสุขใจกว่าฉันอยากให้เธอยิ้มได้เหมือนเก่า เหมือนตอนเรารักกัน"}, {"num": 10, "title": "ถอยดีกว่า", "artist": "อ้อม สุนิสา", "lyrics": "ก็บอกแล้วใช่ไหม ให้มองตาฉันนานๆ\nเธออย่ามัวแต่แอบมองใคร\nถอยดีกว่า ไม่เอาดีกว่า\nใจมันกล้าๆ กลัวๆ"}, {"num": 11, "title": "ต่อหน้าฉัน... (เธอทำอย่างนั้นได้อย่างไร)", "artist": "D2B", "lyrics": "ต่อหน้าฉันเธอทำอย่างนั้นได้อย่างไรหา..\nเห็นรึเปล่าเห็นน้ำตา\nเวลาที่เธออยู่กับใคร\nต่อหน้าฉันเธอทำอย่างนั้นได้อย่างไรฮา..\nเหมือนเธอกำลังฆ่ากันช้าๆ\nหรือเธอจะลืมว่าเรานั้นยังรักกัน\n\nอย่าๆเอาใจเขา\nรู้ตัวเองรึเปล่า ควรจะแคร์ฉัน\nต้องมาทนเห็น\nเห็นอยู่อย่างนั้น ฉันจะขาดใจ"}, {"num": 12, "title": "O.K. นะคะ", "artist": "แคทรียา อิงลิช", "lyrics": "อยู่ๆก็เลยอยากเจอเธอขึ้นมา\nอยากจ้องตาเธอเหลือเกิน\nอยากได้เจอได้คุยให้เพลิดเพลิน\nก็เชิญเธอออกมาจะได้ไหม\n\nโอเคนะคะ นะคะ เจอะกันสักแป๊บนึง\nโอ้ย คิดถึงจังเลยไม่เจอกันมาตั้งนาน\nโอเคนะคะ นะคะ ออกมา มาหากัน\n\nรู้ รู้บ้างหรือเปล่าคนขี้เหงาเขาอยากเจอ"}, {"num": 13, "title": "เพื่อนสนิท", "artist": "Endorphine", "lyrics": "เพื่อนคนนึงแอบรักเธอ  เก็บงำความลับนั้นอยู่ภายใน\nก็ไม่เคยเปิดเผยไป  ด้วยกลัวจะเสียใจ จะเสียเธอ\n\n* ปิดบังอยู่ตั้งนาน และมันอัดอั้นใจ  ยิ่งเราใกล้ชิดกัน ยิ่งหวั่นไหว\nเธอสบตา  กลับหลบตาเธออยู่เรื่อยไป\n\n** ห่างกันเพียงเอื้อมมือ  แต่มันคือแสนไกล\nยิ่งเธอเป็นเหมือนเพื่อนสนิท  ยิ่งไม่มีสิทธิ์จะบอกไป"}, {"num": 14, "title": "หน่วง", "artist": "Room39", "lyrics": "แต่ติดที่ฉันนั้น ไม่ใช่เพียงคนเดียว\nที่ได้รับท่าทีที่แสนดีเหล่านั้น\n\n** มันจึงเป็นความรักที่ไม่ถึงกับสุข\nเป็นความทุกข์ที่ไม่ถึงกับเศร้า\nเป็นความรักที่ทั้งซึ้งทั้งเหงาอยู่ด้วยกัน\nจึงเป็นความรักที่มาพร้อมความอึดอัด\nและเป็นความรักที่ไม่เคยเห็นภาพชัดๆ สักวัน\nมีแค่ความรู้สึกครึ่งๆ กลางๆ\nข้างในใจของฉันเพียง..... คน ( ผู้ ) เดียว"}, {"num": 15, "title": "ซ่อนกลิ่น", "artist": "ปาล์มมี่", "lyrics": "คงไว้ได้แค่กลิ่นที่ไม่เคยเลือนลายังหอมดังวันเก่ายามเมื่อลมโชยมาทิ้งไว้เพียงอดีตที่ไม่เคยหวนมาซ่อนเธอไว้ในใจ เจ้าดอกไม้ซ่อนกลิ่นหอมบาดลึกเกินใคร หอมเกินหักห้ามใจทุกคราวต้องหวั่นไหว ร้อยเก็บเจ้ามาลัยทัดเธอไว้ในใจ เพื่อคงกลิ่นหอมไว้อย่างนั้น"}], "🎵 ลิสต์ที่ 2 (15 เพลง)": [{"num": 1, "title": "ไสว่าสิบ่ถิ่มกัน", "artist": "ก้อง ห้วยไร่", "lyrics": "ฮักกันมาแต่โดนแล้ว บ่มีวี่มีแววเปลี่ยนแปลงไป\nตั้งแต่ทางมีแต่ขี่ไหง่ แล้วจังได๋คือมาเป็นลายต่าง\nสิบสิฮ่างหรือซาวสิฮ่าง สิจับมือกันหย่างว่าซั่นว่า\nหัวใจสะหวอยน้องบ่หัวซา บัดสิว่าเฮาไปกันบ่ได๋\n\nไสว่าสิบ่ถิ่มกัน ไสว่าสิมีกันและกัน\nไสว่าสิฮักแพงกัน ไสว่าสิมีกันตลอดไป\nไสว่าสิบ่ถิ่มกัน ไสว่าสิมีกันเรื่อยไป\nไสว่าสิบ่แบ่งใจ ไสว่าสิมีแค่ เฮา"}, {"num": 2, "title": "เล่นของสูง", "artist": "Big Ass", "lyrics": "ได้เกิดมาเจอเธอทั้งที\nไม่ว่ายังไงจะลองดีสักวัน\nอยากรักก็ต้องเสี่ยง\nไม่อยากให้เธอเป็นเพียงภาพในความฝัน\n\nลำบากลำบนไม่สนใจ\nตะเกียกตะกายสักเพียงใด\nก็ดีกว่าปล่อยเธอไปจากฉัน\nตกหลุมรักจริงๆ เพราะรักจริงๆ\nเธอคงไม่ว่ากัน"}, {"num": 3, "title": "ตาสว่าง", "artist": "Moderndog", "lyrics": "สุดท้าย เรื่องราว ว่างเปล่า (ในใจ/ต่อไป)\nต้องเจอ ต้องเป็น แล้วจะเห็น ใช่ไหม\n\n** ท้องฟ้ายังอยู่ห่างไกล แล้วตัวเธอก็จากไป สายตาพลันสว่างขึ้นมา\nฝนโปรยปรายและผ่านไป เห็นความจริงที่ผ่านมา ย้ำเตือนฉันจำเอาไว้ทุกเวลา\n\nถึงเวลาที่ฉันนั้นควรสงบ ใช้ปัญญาที่เหลือทบทวน ที่ผ่านมา ให้เข้าใจ"}, {"num": 4, "title": "สายน้ำไม่ไหลกลับ", "artist": "มาช่า วัฒนพานิช", "lyrics": "ใครก็รู้สายน้ำทุกสายไม่เคยไหลทวนไม่คืนกลับมา อยากให้รู้ว่าฉันไม่คิดจะเดินย้อนวันเวลา\nแค่อยากเห็นสายน้ำในครั้งก่อน ที่ฉันได้เคยว่ายเวียน เคยยิ้มและมีน้ำตา ยังสวยยังงามดังเดิมรึเปล่า\n\nอยากมาหามาถามได้รู้เรื่องราวชีวิต ไม่พบไม่เจอตั้งนาน วันวานนั้นเป็นสุดดีหรือไร\nส่วนตัวฉันฉันนั้นก็เหงาก็ตามประสา เมื่อครั้งที่เธอจากมา มันคงไม่เคยได้ลองคบใคร"}, {"num": 5, "title": "แหลก", "artist": "Season Five", "lyrics": "ไม่มีอีกแล้ววันที่เคยมีเธอ\nไม่มีอีกแล้วความรักที่เคยงดงาม\nมันแหลกสลายลงไปกับตา\nเมื่อเธอบอกลาในวันนั้น"}, {"num": 6, "title": "เฮอร์ไมโอน้อง (Hermionong)", "artist": "อูน TheChanisara", "lyrics": "อยากเป็นเจ้าหญิงจัสมินจะพาพี่ฟินขี่พรมกับหนู\nอยากเป็นเจ้าหญิงนิทรารอพี่ขี่ม้ามาจุมพิตหนู\nอยากมีเวทมนตร์คาถาจะเสกพี่มาให้เป็น My boo\nAccio Confundo นะโมนะโม เลิฟยูเลิฟยู\n\nอยากเป็นเฮอร์ไมโอนี่จะเสกให้พี่มารักแต่หนู\nจะทำให้พี่ได้รู้ว่ารักกับหนูจะฟินไม่ไหว\nหนูไม่มีมนตร์วิเศษ หนูมีก็แค่หัวใจ\nถ้าท่องคาถาว่า รักพี่รักพี่รักพี่ หมดใจ\nพอเสกให้รักได้ป่ะ"}, {"num": 7, "title": "กบ", "artist": "หวิว ณัฐพนธ์ วงษ์สนิท", "lyrics": "บอกมาดังๆ อยากฟังได้ไหม\nเรื่องที่เธอไปมีใครจริงหรือเปล่า\nถ้า...หากเป็นเรื่องจริงจะถูกทิ้งก็เอา\nแต่อย่าต้องให้เดาได้ไหม...\n\nเหมือนดังกบในกะลา\nเธอปิดตาฉันเอาไว้...\nมืดมิดไม่เข้าใจเรื่องที่เกิด...\nถ้าตัวเธอนอกใจจริง\nแล้วจะทิ้งก็ไปเถิด\nทิ้งฉันด้วยความจริงได้ไหม\nรักใครก็ไปเลย"}, {"num": 8, "title": "เกรงใจ", "artist": "Raptor", "lyrics": "ยังไง     ยังไงดี กลัวเธอลำบากจังเลย\nทำไงดี  ทำไงดี กลัวเธอจะไม่เข้าใจ\nจริง ๆ อันที่จริงฉันก็ไม่ได้โกรธนะ\nยังไม่ลืมเธอ     แต่ไม่เอาหรอก แบบว่าเกรงใจ\n\nไม่เอานะ เกรงใจ  ไม่ดีหรอก เกรงใจ\nไม่เอานะ  เกรงใจ  ไม่ดีหรอก เกรงใจ   \nไม่เอานะ เกรงใจ  ไม่ดีหรอก เกรงใจ\nไม่เอานะ  เกรงใจ  ยังไงก็เกรงใจ"}, {"num": 9, "title": "ชะแว๊บ (ปั๊ดติโธ่)", "artist": "ปองศักดิ์ รัตนพงษ์ (อ๊อฟ)", "lyrics": "ชะแว๊บเข้ามาในหัวใจ\nทำไมเธอช่างน่ารักขนาดนี้\nปั๊ดติโธ่เอ๋ยคนดี\nมองกี่ทีก็ละลาย"}, {"num": 10, "title": "ตะลึง", "artist": "อนัน อันวา", "lyrics": "โดนเลย\nโดนเลยยอมรับว่าโดน\nเธอทำให้ใจที่ยังๆ\nมันๆไปทั้งกระจุก.\nเปลี่ยนๆ ไม่เอาไม่กลับไปนอน\nเจอเธอแล้วใจมันร้อน ร้อน\nตาโตจนแทบจะหลุด\nตะลึง ตะลึงตะลึงตะลึง\nตึ้งตึงตึงตึง\nตะลึงตึงตึง ตะลึงตึงตึง\nตะลึงตึงตึง ตึ้งตึงตึงตึง\nตะลึงตึงตึง ตะลึงตึงตึง\nตะลึงตึงตึง ตึ่งตึงตึงตึง\nตะลึงตึงตึง ตะลึงตึงตึง\nตะลึงตึงตึง ตึ้งตึงตึงตึง\nตะลึงตึงตึง ตะลึงตึงตึง\nตะลึงตึงตึง เธอทำให้ฉัน\nตะลึง ตะลึง ตะลึง ตะลึง"}, {"num": 11, "title": "เชือกวิเศษ", "artist": "Labanoon", "lyrics": "พยายามจนหมดปัญญา ได้เวลาก้มหน้ารับกรรม\nยื้อเท่าไรก็ยิ่งทำ ให้เธอนั้น ลำบากใจ\nในแววตาที่เธอมองกัน บอกอะไรกับฉันมากมาย\nความอึดอัดมันฟ้องใจ ไม่มีทาง เป็นอย่างเดิม\n\nต่อให้เชือกวิเศษผูกเราเอาไว้ เหนี่ยวรั้งให้ตายคงได้แค่ตัว\nยิ่งห้ามเท่าไร ยิ่งยื้อแค่ไหน ยิ่งเห็นแก่ตัว\n\nเมื่อรักมันทำให้เธอหนักใจ ฝืนไปมันก็เท่านั้น\nเมื่อฉันมันทำให้เธอกดดัน ก็พอกันที\nวันนี้เราเดินมาสุดทางฝัน ถ้าอย่างนั้นก็ขอให้เธอโชคดี\nไม่ต้องทน อยู่ตรงนี้ ให้ทรมาน"}, {"num": 12, "title": "ทรงอย่างแบด (Bad Boy)", "artist": "Paper Planes", "lyrics": "ก็คนนี้ น่ะตรง Type\nไม่ว่าคนไหน ไม่สู้เธอ\nก็คนนี้ อยากจองไว้\nไม่อยากให้ใคร มาพบเจอ\nรวบรวมความกล้า\nทักเข้าไปคุยอย่าง Friendly\nแต่เธอตอบมาว่า\nเธอไม่ชอบคนทรงนี้\n\nทรงอย่างแบด แซดอย่างบ่อย\nเธอไม่อินกับผู้ชาย Bad boy\nทรงอย่างแบด แซดอย่างบ่อย\nเธอไม่รักฉันก็คงต้องปล่อย\nโธ่พ่อหนุ่ม Bad boy bad boy\nทรงอย่างแบด แซดอย่างบ่อย\nปล่อยเธอไปกับไอ้หนุ่ม Good boy"}, {"num": 13, "title": "สบตา", "artist": "แอนเดรีย สวอเรซ", "lyrics": "เธอเคยรู้ไหมว่าใครคนหนึ่ง\nแอบมองเธออยู่ตรงนี้ตั้งนาน\nแค่เพียงสบตาใจก็สั่น\nอยากบอกว่ารักเธอเหลือเกิน"}, {"num": 14, "title": "ฤดูร้อน", "artist": "Paradox", "lyrics": "บ่อยครั้งที่ใจเดินออกไปไม่มองข้างทาง หยดน้ำตาอยู่กับการไม่มีค่า\n\nฉันเดินหลงทางอยู่กลางผู้คน ที่สับสนวุ่นวาย\nหันไปหาเธอไม่เจอผู้ใด เมื่อเธอมาจากฉันไป\n\nยืนมองท้องฟ้าไม่เป็นเช่นเคย ฤดูร้อนไม่มีเธอเหมือนก่อนเหมือนเก่าขาดเธอ\nยืนมองท้องฟ้าไม่เป็นเช่นเคย ฤดูร้อนไม่มีเธอเหมือนก่อนเหมือนเก่าขาดเธอ"}, {"num": 15, "title": "วาดไว้", "artist": "BOWKYLION", "lyrics": "ได้เจอครั้งสุดท้ายตอนที่ดูรูปถ่าย\nและเมื่อหลับตาครั้งใดยังเห็นเธอ\nกอดเธอในฝัน ฉันน้ำตาล้นเอ่อ\nสุขเพียงได้เจอในจินตนาการ\n\nแม้เพลงนี้เธอไม่ได้ฟัง\nทุกทุกคำที่เคยบอกไว้\nงดงามแม้ยิ่งห้ามใจ\nฉันจำได้เสมอ\n\nที่เธอเคยบอกฉัน อย่าร้องไห้\nอยู่ให้ได้ถ้าเธอไม่อยู่\nโปรดรับรู้เธอยังอยู่ในใจ"}], "🎵 ลิสต์ที่ 3 (15 เพลง)": [{"num": 1, "title": "ยาใจคนจน", "artist": "ไมค์ ภิรมย์พร", "lyrics": "เป็นแฟนคนจน\nต้องทนหน่อยน้อง\nพี่นี้ไม่มีเงินทอง\nมารองรับความลำบาก\nในแต่ละวัน พี่นั้นต้องทำงานหนัก\nถ้าไม่มีใจรัก\nใครหนอจะร่วมทางได้\nปัญหามากมาย พาใจอ่อนล้า\nทั้งทั้งไม่เจตนา\nแต่ปัญหา ก็มาจนได้"}, {"num": 2, "title": "ยิ้มเข้าไว้", "artist": "Clash", "lyrics": "โอยมันรุมเร้า เศร้าใจจริงๆ\nโดนแฟนทิ้งร้องไห้ฟูมฟาย\nเงินไม่พอใช้ หมุนเงินไม่ทัน\nจะคิดหนัก ก็เลิกคิดสิ ง่ายนิดเดียว\n\nก็เพียงแค่ ฮาเฮ ไม่ต้องไปสนใจ เอ้โอว์\nมัวไปกังวลไม่ช่วยอะไร\nอันนั้นไม่ดีอันโน่นไม่ดี\nเอ้า เฮฮา ทั้งตัวและหัวใจ เอ้โอว์\nคนเลวคนดีก็เจอเรื่องร้ายแรง\nจะเครียดทำไมแค่ยิ้มเข้าไว้"}, {"num": 3, "title": "นางแมว", "artist": "หิน เหล็ก ไฟ", "lyrics": "ไอ้เธอมันคือนางแมวยั่วสวาท\nไอ้เธอมันคือปิศาจหุ่นเซ็กซี่\nเธอกินผู้ชายเป็นอาหาร\nแล้วอัตรธานไปในยามราตรี\nข้า คือ ยมฑูต มารับตัวเธอ\nไป ไป ไปลงนรกเสียเถิดที่รัก\nฉันจะลงโทษเธอ\nไป ไป ไปลงนรกด้วยกันที่รัก\nฉันจะลงโทษเธอ\nเวลาของเธอหมดแล้ว\nไป ไป ไปลงนรกเสียเถิดที่รัก\nฉันจะลงโทษเธอ\nไป ไป ไปลงนรกด้วยกันที่รัก\nฉันจะลงโทษเธอ\nเวลาของเธอหมดแล้ว\nไป ไป เพลงร็อก"}, {"num": 4, "title": "ใจนักเลง", "artist": "พงษ์พัฒน์ วชิรบรรจง", "lyrics": "เมื่อเธอเลือกอยู่กับเขา\nตัวฉันคุกเข่าสั่นไหว\nใจนักเลงจึงปวดร้าวเจียนตาย\nปล่อยเธอไปตามใจเธอต้องการ\n\n* จะยอมให้สั่งและตัดสิน\nว่าฉันต้องถูกทอดทิ้ง\nเรานั้นมันไม่อาจฝืนความจริง\nได้แต่ยิ้มอวยพรให้ไปดี\n\n** ให้เธอได้กับเขา และจงโชคดี\nอย่ามีอะไรให้เสียใจ\nส่วนตัวฉันจะลืม ว่าเคยร้องไห้\nลืมว่าเคยต้องเป็นใคร ที่เธอไม่เอา"}, {"num": 5, "title": "หวง (You're Mine)", "artist": "เอิ๊ต ภัทรวี", "lyrics": "แค่ห้ามน่ารักกับใครแบบนั้น เว้นให้ฉันคนเดียวได้ไหม\nเวลาเธอนั้นมองใคร กลัวเขาจะคิดไปไกล\nได้มั้ย not that I can call you mine\nกลัวว่าเธอนั้นเจอใคร ที่ทำให้เธอนั้นเสียใจ\n\nเพราะเท่าที่ฉันมองดูก็ยังไม่เห็นใคร\nที่ไม่ว่านานแค่ไหนก็จะไม่หวั่นไหว\nแค่หันมามองอยู่ไม่ไกล\njust look around you oh baby"}, {"num": 6, "title": "อยู่ต่อเลยได้ไหม", "artist": "สิงโต นำโชค", "lyrics": "มองไปก็มีแต่ฝนโปรยปราย\nในหัวใจก็มีแต่ความเหน็บหนาว\nท้องฟ้าที่มองไม่เห็นแสงดาว\nคืนเหน็บหนาวยิ่งทำให้ใจเราหนาวสั่น\n\nอยากอยู่ดูแลให้เธอฝันดี\nแต่ใจก็รู้ดีคงหมดเวลาของฉัน\nอยากจะอยู่กับเธอให้นานน๊านนาน\nแต่ก็คงต้องลาเพราะใจที่ไหวหวั่น"}, {"num": 7, "title": "พิง", "artist": "นนท์ ธนนท์", "lyrics": "เรื่องราววันนั้นที่มันทำร้าย\nขอให้ฉันได้ลบมันได้ไหม\nใช้หัวใจของฉันเยียวยาให้เธอ\n\nมันคงไม่แฟร์ ถ้าเรื่องของเขา\nจะทำให้เราไม่ได้ไปต่อ\nโปรดจงเชื่อฉัน ได้ไหม\n\nอยากให้เธอลองรักเหมือนครั้งแรกที่เธอได้พบรัก\nและลืมทุกๆ อย่าง\nมองฉันที่หัวใจ ลองรักด้วยหัวใจ\nไม่ต้องกลัวหรอกนะเธอ\n\nรักฉัน เหมือนเธอไม่เคยเจ็บสักครั้ง\nและรู้เอาไว้ว่าคนที่ยืนข้างเธอ\nเกิดมาเพื่อจะรักเธอ\nไม่มีวันทำเธอเสียใจ"}, {"num": 8, "title": "กระด๊ก กระเด๊ก", "artist": "ฝันดี-ฝันเด่น", "lyrics": "กระด๊ก กระเด๊ก กระด๊ก กระเด๊ก\nขยับไปทางซ้าย ขยับไปทางขวา\nเต้นกันให้มันส์หลุดโลกไปเลย"}, {"num": 9, "title": "แฟนเก็บ", "artist": "ตั๊กแตน ชลดา", "lyrics": "อย่าให้ใครรู้ว่าเราคบกัน\nคือคำที่เธอนั้น\nย้ำเตือนฉันอยู่เสมอ\nเธอบอกว่างจากตัวจริง\nแล้วเธอจะรีบมาเจอ\nรู้ไหมน้ำตาฉันเอ่อ\nเมื่อเธอหันหลังจากลา\nล่ามโซ่หัวใจฉันไว้ใช้งาน\nแต่ไม่ให้ความสำคัญ\nยกย่องออกหน้าออกตา\nเป็นตุ๊กตาคลายเหงา\nอยู่ห้องเช่าคอยเธอโทรมา\nเมื่อเธอนึกอยากมาหา\nฉันจึงมีค่าในฐานะแฟน\nแฟนเก็บ อยู่แบบเจ็บๆ\nอย่างคนเป็นน้อย\nมีหน้าที่คอย\nช่วยเธอบรรเทา\nยามเหงาอ้อมแขน"}, {"num": 10, "title": "ซ่าส์...(สั่นๆ)", "artist": "D2B", "lyrics": "โธ่เอ๋ย ไม่เคยจะอาย ก็แบบว่าเขินพอเป็น style นะ\nเดี๋ยะเหอะ เดี๋ยะเหอะ ไว้พร้อมแล้วเธอจะโดนซะ\nความซ่าส์เรามีพอตัว เพียงแต่วันเนี้ยะมันยังไม่ชัวร์นะ\nเดี๋ยวก่อน เดี๋ยวก่อน ไว้ชัวร์แล้วเราจะเข้าไป\n\nซ่าส์แต่แบบสั่นๆ ก็ยังไม่ค่อยมั่นใจ\nซ่าส์แต่แบบหัดใหม่ เจอะเธอแล้วหัวใจเต้นถี่\nซ่าส์แต่แบบหวั่นๆ มันเลยต้องถอยๆทุกที\n\nถึงจะแบบว่ายิ่งเจอ ยิ่งสั่น ยิ่งเจอ ยิ่งสั่น\n\nยิ่งเจอ ยิ่งสั่น ยิ่งเจอ ยิ่งสั่น ก็ยังสู้ตาย"}, {"num": 11, "title": "มะลึกกึ๊กกึ๋ยย์", "artist": "นาตาลี สตีเบิร์ท", "lyrics": "ถ้าเธอไม่มาเจอจะทำให้เธอปั่นป่วน จะตามไปกวนใจเธอแน่นอน\nจะตามไปรังควานเธอไม่ให้หยุดหย่อน อย่างเธอต้องมาเจอเวทมนต์นี้\n\n(เพี้ยง) โอมมะลึกกึ๊กกึ๋ยย์ มะลึกกึ๊กกึ๋ยย์ มะลึกกึ๊กกึ๋ยย์\n(เพี้ยง) โอมมะลึกกึ๊กกึ๋ยย์ มะลึกกึ๊กกึ๋ยย์ มะลึกกึ๊กกึ๋ยย์\n(เพี้ยง) โอมมะลึกกึ๊กกึ๋ยย์ มะลึกกึ๊กกึ๋ยย์ มะลึกกึ๊กกึ๋ยย์\n(เพี้ยง) โอม..."}, {"num": 12, "title": "ถ้าเราเจอกันอีก", "artist": "Tilly Birds", "lyrics": "หากเราได้เจอกันอีกสักครั้ง อยากขอกอดเธอไว้ให้อุ่นเหมือนเก่าให้คำว่าเรายังคงเหมือนเดิม ไม่เคยจางหายไปฟ้าและท้องทะเลต้องห่างกัน เหมือนที่เราทั้งสองต้องจากกัน ฉันเข้าใจแม้ว่าเธอไม่หวนคืนกลับมา ขอแค่เธอไม่ลืมช่วงเวลา ที่มีความหมายถ้าเราได้เจอกันอีกสักครั้ง"}, {"num": 13, "title": "วาฬเกยตื้น", "artist": "Gungun", "lyrics": "จงจำไว้ ว่ารักใคร\nอย่าทำให้ใจต้องเจ็บ\nและโปรดจงจำไว้\nทำไมถึงเสียใจ\nเพราะเราทำตัวเราเอง\n\nรักก็คือรัก หลงก็คือหลง\nถ้าถามชาวประมง ก็คงไม่เข้าใจ\nเพราะฉันนั้นเป็นวาฬที่เกย ตื้นน้ำตาย\nใจสลายแหลกลงไปใต้ทะเล"}, {"num": 14, "title": "ไม่อาจเปลี่ยนใจ", "artist": "เจมส์ เรืองศักดิ์", "lyrics": "ไม่บอกก็รู้ว่าเธอ ไม่มีฉันเหลืออีกแล้วในใจ\nเจ็บมันเป็นอย่างไร เข้าใจลึกซึ้งก็วันนี้\n\nอยากจะบอกเธอว่ารัก อยากจะฉุดรั้งเธอไว้ เพื่อทำทุกอย่าง ที่ตัวฉันทำได้\nแต่มันก็สายไปแล้วใช่ไหม\n\nฉันคงไม่อาจทำให้เธอเปลี่ยนใจ ฉันคงไม่อาจทำให้เธอกลับมารักฉัน\n\nเมื่อคนนั้นเข้ามาทำให้ใจเธอหวั่นไหว รักเขาช่างง่ายดาย\n\nไม่อาจจะลบภาพเธอจากความทรงจำที่ฝั่งในใจ\nอยากหยุดเวลาไว้ ไม่อยากให้เธอต้องเจอเขา"}, {"num": 15, "title": "รบกวนมารักกัน", "artist": "ทาทา ยัง", "lyrics": "(ตกลงไหม)\nคนเดียวลำพัง หากหลงทางจะทำไง\n(ตกลงไหม)\nมีตัวคนเดียว ฝันอะไรก็หนักใจ\n(ตกลงไหม)\nเวลามันเซ็ง อยากระบายจะทำไง\nก็คิด แล้วเรื่องใหญ่อยู่เหมือนกัน\n\nหากไม่ดูเป็นการรบกวน\nก็จะชวนเธอมารักกัน\nถูกใจเธอมาตั้งนาน รู้ไหม\nหากเต็มใจจะโดนรบกวน\nก็จะชวนมารวมหัวใจ\nก็คิดว่าช่วย หน่อยก็แล้วกัน"}], "🎵 ลิสต์ที่ 4 (15 เพลง)": [{"num": 1, "title": "รักต้องเปิด (แน่นอก)", "artist": "3.2.1 feat. ใบเตย อาร์สยาม", "lyrics": "ขอดูเธอหน่อย ฉันเองอ่ะเปิดละ\nใจเธอยังไม่เปิด oh oh oh\nขอใจเธอหน่อย ฉันเองอ่ะเปิดละ\nแล้วเธอจะเปิดมั้ย แล้วเธอจะเปิดมั้ย\nแล้วเธอจะเปิดมั้ย\n\nมันแน่นอก (Yeh!) ก็ยกออก (Yeh!)\nให้แบกเอาไว้ นานไป เดี๋ยวใจถลอก\nมันแน่นอก (Yeh!) ต้องยกออก (Yeh!)\nเรื่องใหญ่อย่างงี้ บังยังไง ก็ยิ่งกระฉอก"}, {"num": 2, "title": "น้ำลาย", "artist": "Silly Fools", "lyrics": "บ้างก็ว่าฉันเป็นคนอย่างนั้น บ้างก็ว่าฉันเคยทำอย่างนี้\nว่ากันว่าฉันเป็นคนไม่ดี ว่าแต่ว่าไม่เคยพูดกับฉันซักที\n\n** สรุปว่าฉันนั้นดูไม่ดี ทั้งที่เธอไม่ดู\nพอท้าให้เธอได้ดู เธอก็ดันรู้ดี\nว่าฉันเป็นอย่างไร จากน้ำลายของใครต่อใคร"}, {"num": 3, "title": "เพียงพอ", "artist": "Potato", "lyrics": "บังเอิญว่าฉันมีเธอ ก็เลยไม่ค่อยต้องการไขว่คว้าอะไร\nไม่ดิ้นให้ทรมานหวั่นไหว หยุดและมั่นคงกว่าเดิม\nตั้งแต่ที่ฉันมีเธอก็รู้ว่าความต้องการหมดแล้วไม่มี\nไม่ต้องทะเยอทะยานแค่นี้ก็สุข ทุกวันแค่มีเธอฉันยังไงก็เพียงพอ\n\nชีวิตบางคน วิ่งวนไม่เจอคำว่าพอดี\nเพราะมัวแต่มองที่หมายไกลๆ ไม่เคยจะลองค้นหาข้างกาย\nฉันอาจจะเป็นอย่างนั้นกำลังแข่งขัน แก่งแย่งชิงกันไป\nแต่เหตุที่ฉันไม่เป็นอย่างใคร"}, {"num": 4, "title": "หว่าเว้", "artist": "The Yers", "lyrics": "อยู่คนเดียวอยู่ลำพัง หว่าเว้\nอยู่บนเตียงกับตัวเอง หว่าเว้\nไม่มีเธอช่างเดียวดาย หว่าเว้\nอยากมีใครที่จริงใจ ว้าเหว่\nขอนอนรอ คอยนานแล้ว รอมานาน ยังหาไม่เจอ\nคนดีๆ อยู่ที่ไหน ไม่มีใครรู้\n\nสุดท้ายคงต้องยืนเหว่ว้า ไม่เจอแล้วคนที่เราตามหา\nก่อนนอนก็มีแต่เหงา ตื่นมาก็ยังคงเฉา ยังหาไม่เจอ\nอยากมีสักคนให้คอยห่วงหา เฝ้ารอทุกคืนจนใจอ่อนล้า\nไม่มีสักคนหนึ่ง ไม่เจอสักคนหนึ่ง อยากเจอสักคนหนึ่ง"}, {"num": 5, "title": "ดึกแล้ว", "artist": "ไฮดรา", "lyrics": "ดึกแล้ว ข่มตานอน\nแต่หัวใจ รุมเร้า\nออกมายืนหาดาว\nช่วยปลอบใจ\nดึกแล้ววุ่นใหญ่\nใจร้อนรน\nอยู่ไหน อยากจะรู้\nตอนนี้เธอ อยู่ไหน\nหลับสบาย หรือไร\nช่วยบอกกัน\nเอ่ยถาม พระจันทร์\nบอกฉันที"}, {"num": 6, "title": "อมพระมาพูด", "artist": "เบิร์ด ธงไชย & เสก โลโซ", "lyrics": "แสร้งทำเป็นดี\nบอกไม่มีไม่มีใครใหม่\nอยากจะพัก หัวใจ\nไม่อยากมีใครมาพัวพัน\n\nอมพระมาพูดก็ไม่เชื่อ\nหน้าเนื้อใจเสืออย่างเธอ\nใครเตือนไม่ฟังว่าอย่าเผลอ\nมีใจให้\nอมพระมาพูดก็ไม่เชื่อ\nหน้าใสใจเสือ เชื่อไม่ได้\nประวัติโชกโชนเชือดใจ\nมากี่คน เคยนับบ้างไหม"}, {"num": 7, "title": "ชั๊บ...ชั๊บ...ชั๊บ", "artist": "เจมส์ เรืองศักดิ์", "lyrics": "ยุคนี้ไม่ใช้ก็ต้องตัด\nเลือกเลือกใช้รัดเข็มขัด\nดูดูตามความประหยัด\nเคยตามใจก็ควรตัด\nความจำเป็นควรมาก่อน\nดูอะไรที่เกินกว่านั้น ไม่จำเป็น\nรักเขา ไม่รักก็ต้องตัด\nเมื่อเมื่อเขาไม่ค่อยเหมาะ\nไปมีใครมีคนอื่น\nไปมีใจให้คนใหม่\nเธอลองลองทบทวนใหม่\nดูที่ทำ ที่ทำอย่างนี้\nควรตัดใจไหม\nตัดเลยตัดเลย ชั๊บชั๊บชั๊บ\nตัดให้ขาดเลย ชั๊บชั๊บชั๊บ\nอย่าไปเสียใจ ร้องไห้อยู่เลย\nตัดเลยตัดเลย ชั๊บชั๊บชั๊บ\nตัดให้ขาดเลย ชั๊บชั๊บชั๊บ\nให้พอเสียที"}, {"num": 8, "title": "หนุ่มบาว สาวปาน", "artist": "คาราบาว & ปาน ธนพร", "lyrics": "ผู้หญิงทุกคนเอาแต่ใจ น้ำตาตกในตบมือข้างเดียว\nเรื่องง่ายๆ ที่ผู้ชายไม่รู้ แต่ผู้หญิงเค้ารู้ผู้ชายไม่เกี่ยว\n\nความเหงาเป็นขั้วบวกขั้วลบ\nหนุ่มสาวได้มาพบกันในคืนร้าวราน\nคนเหงาย่อมเข้าใจคนเหงา\nเมื่อสายตาเศร้าๆ ส่งไปทักทายกัน\n\nหนุ่มขอเพลงบาวสาวก็ขอเพลงปาน\nหนุ่มร้องเพลงบาวสาวก็ร้องเพลงปาน\nดอกรักผลิบาน ณ ตะวันแดง"}, {"num": 9, "title": "เจ็บน้อยที่สุด", "artist": "Zeal", "lyrics": "แต่นี่ก็นานมาแล้ว วี่แววของคนจะกลับมาหายังไม่มีให้มั่นใจ\nและฉันต้องอยู่อย่างนี้ต่อไป จนถึงเมื่อไหร่ไม่รู้ที่ต้องเดียวดาย\n\nหรืออยากให้ฉันเจ็บน้อยที่สุดเลยบอกกันให้ฉันรอ\nอยากให้ฉันนั้นมันหยุดรักเธอ\nด้วยการที่มันท้อใจไปเอง หลงลืมกันไปเอง\nว่าเคยมีเธอข้างกัน\nถ้าอยากให้ฉันเจ็บน้อยที่สุดแค่เอ่ยคำว่าร่ำลา\nอย่าฉุดฉันให้มาอยู่ตรงนี้กับรอยน้ำตา\nและความหวังว่าเธอจะกลับมา\nถ้าสุดท้ายจะไม่กลับมาหากัน"}, {"num": 10, "title": "เลือดกรุ๊ปบี (B Blood)", "artist": "เอิ๊ก ชาลิสา", "lyrics": "นานป่านนี้เธอจะเป็นอะไรไปหรือเปล่า\nเธอบอกแป๊บ แต่สุดท้ายก็กลายเป็นว่างเปล่า\n\nต้องมีอะไรผิดพลาดตรงไหน\nไม่เข้าใจเลยสักครั้ง\nไอ้ที่เค้าทำฉันนั้นก็ทำ\nแต่ทำและไม่เคยสมหวัง\nหรืออาจเป็นเพราะพื้นดวงหรือเปล่า\nหรือเป็นที่ราศีของดวงดาว\nเลยทำให้ฉันต้องเหงาอย่างงี้อยู่ใช่ไหม"}, {"num": 11, "title": "เด็กมีปัญหา", "artist": "โฟร์-มด", "lyrics": "มันขาดคนคอยแทกแคร์\nกลัวโดนรังแกด้วยสายตา\nโอ๊ะโอ น่ากลัวเหลือเกิน\nก็มันอ่อนแอนี่นา ช่วยส่งคนมารักที\n\nเด็กมีปัญหา หา หา แฟนไม่ได้เลยเธอ\nปล่อยไปต้องเผลอ เผลอ เผลอ เที่ยวไปรักใครๆ\nก็เลยต้องหา หา หา คนมาควบคุมใจ\nเป็นเธอได้ไหม ยัย ยัย ช่วยมารักรักกันก็จะดี"}, {"num": 12, "title": "คิดมาก", "artist": "ปาล์มมี่", "lyrics": "บอกกับฉันได้มั้ยว่ามันเป็นความจริงหรือว่าฉันคิดมาก\nใจฉันเริ่มจะหวั่นไหว กับคำถามที่ยังไม่ได้คำตอบ\nบอกความในใจกับฉัน อยากจะรู้ว่าใจเธอคิดเช่นไร\nหรือว่าเธอคิดจะแกล้งกัน เธออยากเห็นน้ำตาของฉันใช่มั้ย\n\nอยากจะบอกให้เธอรู้ ว่าใจฉันนั้นมันกังวลแค่ไหน\nก่อนจะพูดอะไรออกมา อยากจะขอให้เธอสัญญา\nว่าเธอจะไม่ทำให้ฉันต้องเสียใจ"}, {"num": 13, "title": "อย่าทำให้ฟ้าผิดหวัง", "artist": "ดา เอ็นโดรฟิน", "lyrics": "ถึงล้มก็รู้ ว่าฉันยังมีมือของเธอ\nถึงฉันนั้นพลั้งหรือพลาดอะไรไป\nอย่างน้อยยังมีเธอ เป็นเหมือนเส้นชัย\nและทุก ๆ ครั้ง ที่เสียอะไรไปเท่าไร\nก็คิดทุกครั้งว่าได้อะไรมา\nและพบว่าฉันโชคดีสักเพียงใด ที่พบเธอ\n\n** อยู่กันอย่างนี้นานๆ นะเธอ\nจากกันวันไหน ฟ้าคงจะผิดหวัง\nอยู่กันตรงนี้หัวใจจะฝากฝัง ใส่มือเธอนั้น\nอย่าไปไหน อย่าไปไหน อย่าไปไหน"}, {"num": 14, "title": "Fire", "artist": "Buddha Bless", "lyrics": "เหมือนกับหนังแอ๊คชั่น รับประกันว่าต้องมันแน่นอน\nไม่มีจืดชืด ไม่มียืดยาด\nไม่มีน้ำเน่า เหมือนในละคร\nทุก ๆ ฉาก ทุก ๆ ตอน จะมีแต่ความสะใจ\nระวังตัวไว้นะคนดี พี่จะพ่นน้ำดับไฟ\n\nอยู่ในปาร์ตี้ ร้อนยังกับ fire\nเธอสวย sexy, hot ยังกับ fire\nไอ้เราก็เป็นผู้ชาย ชอบเล่นกับ fire\nเข้าไป เข้าไป เข้าไปเล่นกับ fire"}, {"num": 15, "title": "ดวงเดือน", "artist": "โจอี้ ภูวศิษฐ์", "lyrics": "วันที่เราห่างไกล\nหัวใจยังห่วง ไม่เคยจะห่าง\nคืนที่เราห่างไกล\nหัวใจอ้างว้าง ฉันมีเพียงเธอ\n\nก็มันคิดถึงเธอ\nอยากบอกกับเธอเอาไว้\nอยากรู้เธอเป็นยังไง\nสบายดีอยู่หรือเปล่า"}], "🎵 ลิสต์ที่ 5 (15 เพลง)": [{"num": 1, "title": "ปูหนีบอีปิ", "artist": "พร จันทพร", "lyrics": "ว่าสิไปหาก่นปูอยู่ฟากคูฝาย\nเอามาป่นให้อ้ายได้กินนำกัน\nก่นไปดีๆ ทำไมถึงเป็นอย่างนั้น\nอ้ายจ๋ามาส่อยปิแหน่\n\nปูหนีบอีปิอิปิอิปิอิปิอิปิ เจ็บหลาย\nปูหนีบอีปิอิปิอิปิอิปิอิปิ เกือบตาย\nมาเอาอีปิอิปิอิปิอิปิอิปิ แหน่อ้าย\nสิขาดใจตายย้อนว่าปูหนีบปิ"}, {"num": 2, "title": "ใจสั่งมา", "artist": "Loso", "lyrics": "ก็เลยมาร้องเพลงบอก แค่อยากให้เธอนั้นเข้าใจไอ้สิ่งที่ฉันทำลงไป ใจสั่งมาอย่าโกรธเลยนะคนดี ยกโทษให้ฉันนะแก้วตาคราวหลังจะไม่มาจะไม่โทร เย้..เย"}, {"num": 3, "title": "แสงสุดท้าย", "artist": "bodyslam", "lyrics": "ยังคงมีรักแท้เป็นแสงนำไปในคืนที่หลงทางนาทีที่ความฝันนั้นพร้อมเป็นเพื่อนตายเส้นทางนี้ฉันยังมีจุดหมายตราบใดที่ปลายท้องฟ้ามีแสงรำไรจะไปจนถึงแสงสุดท้าย"}, {"num": 4, "title": "กระดาษห่อไฟ", "artist": "เสือ ธนพล", "lyrics": "จะเอาอะไรมาปิดบังความจริง\nที่มันร้อนรุ่มอยู่ข้างใน\nเหมือนเอากระดาษไปห่อไฟ\nไม่นานก็ไหม้จนหมดสิ้น"}, {"num": 5, "title": "กอดเสาเถียง", "artist": "ปรีชา ปัดภัย", "lyrics": "ยืนกอดเสาเถียง ร้องไห้คนเดียวกลางทุ่ง\nเมื่อเจ้าลืมคำสัญญาที่เคยมั่น\nน้ำตาไหลรินรดผืนดินทุกวัน\nคึดฮอดคนดีที่ลืมกันไป"}, {"num": 6, "title": "อาโบเดเบ", "artist": "ทาทา ยัง", "lyrics": "บอกว่าฉันอา-โบ-เด-เบ ฉันอา-โบ-เด-เบฉันอา-โบ-เด-เบรู้ปล่าวบอกว่าฉันอา-โบ-เด-เบ ฉันอา-โบ-เด-เบฉันอา-โบ-เด-เบแต่เธอก็รอรอแต่เธอ รอแต่เธอนะรอแต่เธอ"}, {"num": 7, "title": "รู้สึกอย่างไร", "artist": "Raptor", "lyrics": "อยากรู้ว่าเธอรู้สึกอย่างไร\nเวลาที่สองเราสบตากัน\nมีฉันอยู่ในใจบ้างไหม\nหรือเป็นแค่เพื่อนคนหนึ่งเท่านั้น"}, {"num": 8, "title": "มองได้แต่อย่าชอบ", "artist": "ลุลา feat. เต๋อ ฉันทวิชช์", "lyrics": "มองได้แต่อย่าชอบ\nจ้องได้แต่อย่าจอง\nเพราะคนนี้มีเจ้าของแล้วนะเธอ"}, {"num": 9, "title": "ไม่รักไม่ต้อง", "artist": "นิว จิ๋ว", "lyrics": "ฉันนั้นพยายามจะตัด แต่เธอก็พยายามจะติด\nคิดบ้างไหมว่ามันผิด ที่เธอยังมีเยื่อใย\n\nไม่รักไม่ต้องมาแคร์ ไม่ต้องมาดีกับฉัน\nไม่รักไม่ต้องมาหวง ไม่ต้องมาห่วงใยฉัน\nไม่รักไม่ต้องมาทำอะไรๆ ทั้งนั้น\nเพราะใจฉันยังอ่อนแอ"}, {"num": 10, "title": "รักไม่ยอมเปลี่ยนแปลง", "artist": "ติ๊ก ชิโร่", "lyrics": "ฟ้ายังมีหม่น ฝนยังมีวันแล้งสลากยังมีกินแบ่ง แต่หากจะแบ่งใจนี้ไม่มีทางน้ำมันยังมีหมด รถยังมีวันล้างแต่หากจะให้ล้างใจ หมดจนลืมเธอไปไม่มีทาง"}, {"num": 11, "title": "โกหกหน้าตาย", "artist": "เท่ห์ อุเทน หาญฟองฟุ้ง", "lyrics": "ปวดใจดังไฟสุมทรวง ทะลวงอกฉันเมื่อเธอมาตัดสัมพันธ์ เอาเมื่อสายไปใครไหนจะทันตั้งตัว ยั้งหัวใจหลอกให้หลงงมงาย ใจสุดแสนดำ"}, {"num": 12, "title": "แฟน", "artist": "Lipta", "lyrics": "ไม่อยากเชื่อ ว่าสายตา\nจะได้พบคนที่กำลังตามหา\n\nอยากจะได้คนนี้เป็นแฟน\nก็ฉันนั้นอยากจะได้คนนี้เป็นแฟน\nถ้าหากได้คนนี้เป็นแฟนก็ดี\nอยากจะได้คนนี้เป็นแฟน\nก็ฉันนั้นอยากจะได้คนนี้เป็นแฟน\nถ้าหากได้เธอนั้นเป็นแฟนก็ดี"}, {"num": 13, "title": "คุกกี้เสี่ยงทาย", "artist": "BNK48", "lyrics": "แอบมองเธออยู่นะจ๊ะแต่เธอไม่รู้บ้างเลย\nแอบส่งใจให้นิด ๆ แต่ดูเธอช่างเฉยเมย\nเอาล่ะเตรียมใจไว้หน่อย มันจะหัวก้อยต้องเสี่ยงกัน\nYeah, yeah, yeah\nคนน่ารักก็เยอะนะที่เดินอยู่ทั่ว ๆ ไป\nคนธรรมดาอย่างฉันนะ เธอคงจะไม่สนใจ\nเอาล่ะเตรียมใจไว้เถอะ เราเองก็ชักเริ่มไม่แน่ใจ\nYeah, yeah, yeah"}, {"num": 14, "title": "นะหน้าทอง", "artist": "โจอี้ ภูวศิษฐ์", "lyrics": "ฉันจึงเป่าคาถาเพื่อให้เธอหลงใหล\nให้ทองที่แปะหน้าฉัน ทำให้เธอคลั่งไคล้\nจะขอเอาความมารักฉันมาผูกไว้ให้ในหัวใจเธอมีแต่ฉัน\nฉันจึงเป่าคาถาเพื่อให้เธอหลงรัก\nให้ลืมผู้บ่าวเป็นร้อย ที่มันคอยมาทัก\nและขอให้ความรักนี้ไม่มีเสื่อมคลาย โอม"}, {"num": 15, "title": "จังหวะหัวใจ", "artist": "บี้ สุกฤษฎิ์", "lyrics": "แกล้งกันบ่อยบ่อย\nอย่างงี้คงไม่ปล่อย\nคงต้องลองลอง\nต้องคลิ๊กกันดูหน่อย\nรักหรือจะหลอก\nเดี๋ยวรู้ไม่ต้องบอก\nขอจับใจเธอหน่อย\nเต้นแรงแค่ไหน\nมาเล่นให้ใจฉันเต้นแบบนี้\nฉันว่าเธอก็มีอาการใช่ไหม\nใจมันเต้นมันเต้น\nเป็นจังหวะรัก\nแล้วเธอล่ะ\nอ่ะเป็นจังหวะยังไง"}], "🎵 ลิสต์ที่ 6 (15 เพลง)": [{"num": 1, "title": "โคราชระเริง", "artist": "ตั๊กแตน ชลดา", "lyrics": "คนบ้านกันเอง ไม่ต้องเกรงใจกันหรอกพี่\nสนุกกันให้เต็มที่\nกระชับพื้นที่เข้ามาเด้อ... เด้อ\nเอ๊า ใจ ใจ ใจ ใจฉันใจเธอ\nเต้นด้วยคนเดิ้งเด้อ\nจะมาจากไหนก็ไทยคือกัน\nโคราชบ้านเอ็งนะ\n\nสามช่ารำวง ยุคนุ่งกระโปรงสีบานเย็น\nสู่ยุคไอทีลีลาเต้น\nไม่มีลิมิตเรื่องความมันส์\nเหงาๆ หงอยๆ เงินน้อยคอยงาน\nวิ่งตามความฝัน เหนื่อยมาพอแล้วหนอใจ"}, {"num": 2, "title": "ข้ามันลูกทุ่ง", "artist": "ไท ธนาวุฒิ", "lyrics": "ข้ามันลูกทุ่ง\nข้านอนมุ้งสี่สาย\nผูกด้วยเชือกจูงควาย\nเอนกายแล้วสิ้นลำเค็ญ\nไม่ต้องสนใจ\nมาดัดนิสัยข้าดอกบานเย็น\nข้ามันลูกทุ่งเอ็งก็คงเห็น\nข้าเป็นแค่คนชาวนา\n.ถ้าเอ็งมองข้า หัวข้าล้าสมัย\nสุดที่เอ็งทนได้\nตามใจเอ็งเถิดแก้วตา\nจะเปิ่นหรือเชย"}, {"num": 3, "title": "หวานเย็น", "artist": "กะลา (KALA)", "lyrics": "เธอคือหวานเย็น ดับร้อนในใจฉัน\nแค่อยู่ใกล้กันโลกพลันสดใส\nเหมือนไอศกรีมละลายในใจ\nหวานชื่นละมุนละไมทุกนาที"}, {"num": 4, "title": "คู่กัด", "artist": "เบิร์ด ธงไชย", "lyrics": "ลิ้นกับฟันพบกันทีไรก็เรื่องใหญ่\nน้ำกับไฟถ้าใกล้กันก็พังทลาย\nแต่ทำไมสองเรายิ่งทะเลาะยิ่งผูกพัน"}, {"num": 5, "title": "เท้าไฟ", "artist": "ทัช ณ ตะกั่วทุ่ง", "lyrics": "มาจากไหน\nเธอจะเป็นใครไม่สำคัญหรอก\nมาจากไหน\n\nทางเดินไปไม่ขวางทางหรอก\n\nเก็บเอาไว้ทำไม\nเก็บเอาไว้ทำร้ายตัวเอง\nจุดให้เท้าเป็นไฟ\nให้มันหายไปพร้อมในเพลง"}, {"num": 6, "title": "พี่ชายที่แสนดี", "artist": "รวิวรรณ จินดา", "lyrics": "สองพี่น้องเดินไป น้องตามพี่ชาย\nจับมือจูงน้องไป มองฟ้าอันกว้างใหญ่\nฟ้าคงไกลไป...ขี่คอพี่สูงเอง....\n.ครั้นโดนเขารังแก ร้องงอแงร้องไห้\nพี่คนนี้ยังคอยคุ้มครอง..คุ้มภัย\nน้องเอยอย่ากลัวใคร..เขา"}, {"num": 7, "title": "ใจเกเร", "artist": "Nice 2 Meet U", "lyrics": "พอเถอะพอได้แล้ว หยุดหลอกตัวเองเสียทีถ้าหัวใจเธอมี วันนี้เราคงได้คบกันเธอไม่มองยังฝืน ก็หัวใจยังดึงดันรอแค่เพียงสักวัน เผื่อเธอจะมาเห็นใจ"}, {"num": 8, "title": "คนมีเสน่ห์", "artist": "ป้าง นครินทร์", "lyrics": "ท่อนแขนก็จัดว่าใหญ่ ผู้หญิงอะไรขาโต\nใครทำให้เธอโมโหคงคอหักตาย\nไม่รู้น้ำหนักเท่าไหร่ กล้าชั่งให้ดูไหมนี่\nจะเอาเธอมาแยกมองแต่ละที ไม่มีอะไรสวยเลย\n\nแต่ดูรวม ๆ แล้วมีเสน่ห์เหลือเกิน\nไม่ต้องมาเขิน ฉันพูดจริง ๆ\nเธอมีเสน่ห์มากมาย จะน่ารักไปไหน\nอยากจะได้แอบอิง ยิ่งดูยิ่งมีเสน่ห์"}, {"num": 9, "title": "ทน", "artist": "SPRITE x GUYGEEGEE", "lyrics": "พี่ไม่มี Louis Vuitton\nมีแต่หนี้ก้อนโต\nนวลน้องคงน้ำตานอง\nเพราะต้องช่วยพี่ออกค่าคอนโด\nอยู่กับพี่น่ะมันลำบากนะ หรือว่าน้องจะทน\nอยู่กับพี่ลำบากนะหรือว่าน้องจะทน"}, {"num": 10, "title": "ยินยอม", "artist": "อัสนี-วสันต์", "lyrics": "อ่อนแอเพราะรักเธอมากกว่า กว่าใครจะเข้าใจ\nหวาดกลัวสักครั้งที่เธอขัดใจ จะมาหนีไป\nก็เลยต้องยอมทุกอย่าง ก็คงเห็นใจกันบ้าง\nก็ไม่อยากให้เราต้องจืดต้องจาง\nจะพร้อมทำตามด้วยความยินยอม"}, {"num": 11, "title": "ยิ่งโตยิ่งสวย", "artist": "Blackhead", "lyrics": "คนอะไรไม่รู้ ยิ่งโตยิ่งดูน่ารัก ใครต่อใครก็ทัก ว่าน่ารักจริงนะเธอนะคนอะไรไม่รู้ ยิ่งโตยิ่งดูยิ่งสวย จะมองกี่ทีก็สวยพอเถอะน้องอย่างนี้เรียกสวยไม่เกรงใจ นี่น้อง ๆ รู้ตัวมะว่าน้องน่ะงามจับใจ ใครเห็นก็ต้องตะลึง"}, {"num": 12, "title": "สายตาหลอกกันไม่ได้", "artist": "อิ้งค์ วรันธร", "lyrics": "อยากรู้ความจริงต้องจ้องมองที่ตา เขาว่าสายตามันหลอกกันไม่ได้เขาพูดกันว่าสายตามันเป็นสิ่งเดียว ที่พูดเเทนหัวใจฉันว่าสายตาเธอหลอกฉันไม่ได้ เธอจะอยากหลอกใครก็ตามใจ แต่อย่ามาหลอกฉันเลย"}, {"num": 13, "title": "เหงา...เข้าใจ", "artist": "ปาน ธนพร", "lyrics": "อยู่คนเดียวมันเหงา เท่าไร\nดีกว่าคนใจร้าย เข้ามา\nมาทำให้เจ็บ ให้มีน้ำตา\nให้เก็บไว้ ฟรีๆ\nอยู่คนเดียวมันเหงา เข้าใจ\nก็ประคองตัวไป อย่างนี้\nถ้าเจอไม่ดี\nไม่มีคงปลอดภัย เสียกว่า\nมาทำให้เจ็บ ให้มีน้ำตา\nให้เก็บไว้ ฟรีๆ"}, {"num": 14, "title": "เลี้ยงส่ง", "artist": "So Cool", "lyrics": "ที่เก่าเจ้าเดิมให้มาเจอ ขอให้เธออย่าลืมนะ\n\nเลี้ยงส่งให้ความปวดร้าวความเศร้าทำเอาเจ็บ\nเลี้ยงส่งให้เธอกับเขาได้รักกันนานๆ\nขอให้เธอโชคดีพ้นจากคนๆนี้ที่เธอไม่ต้องการ\nเช็คบิลที่ฉันซื้อความเสียใจฉันจะจ่ายเอง"}, {"num": 15, "title": "Sha La La La La", "artist": "ปุ๊กกี้ ปริศนา", "lyrics": "My (Your) heart goes\nSha-la-la-la-la Sha-la-la in the morning oh\nSha-la-la-la-la Sha-la-la in the sunshines\nSha-la-la-la-la Sha-la-la in the evening oh\nSha-la-la-la-la Sha-la-la-la-la just for you"}], "🎵 ลิสต์ที่ 7 (15 เพลง)": [{"num": 1, "title": "ผู้สาวขาเลาะ", "artist": "ลำไย ไหทองคำ", "lyrics": "เพียงแค่จอบแนมซอมเบิ่งอ้ายอยู่ไกลๆ หัวใจน้องนี้ก็มีแฮง\nฮู้ว่าอ้ายมีเขา น้องกะสิบ่ขอแข่ง\nบ่อาจสิไปแย่ง แต่น้องขอสแตนด์บาย\n\nซอมเบิ่งอยู่เด้อ ถ้าหากว่าเธอ นั้นเลิกกันกับเขา\nเรื่องของสองเฮาสิเป็นไปได้บ่\nบ่ได้เข้ามาเพื่อกดดัน แต่ว่าฉันนั้นแค่รอ\nฟ่าวเลิกกันแหน่เถาะ ผู้สาวขาเลาะ อยากเป็นผู้สาวอ้าย"}, {"num": 2, "title": "ยาพิษ", "artist": "bodyslam", "lyrics": "เอะอะก็ว่ารัก เอะอะก็คิดถึง\nแต่เธอไม่เคยซึ้งไม่เคยเข้าใจ\nไม่เคยจะไม่รู้ ไม่เคยจะไม่เห็น\nไม่ห่วงเลยว่าใครจะเป็นจะตาย\nคำพูดที่ไม่เคยคิด\nความจริงก็คือยาพิษ\nทำลายชีวิตของคนงมงาย\n.เธอจะรู้บ้างหรือเปล่า\nคิดหรือเปล่า\nว่ามีใครเขาทุกข์ทน\nพิษของคำคน\nร้ายแรง แค่ไหน"}, {"num": 3, "title": "วัดใจ", "artist": "Silly Fools", "lyrics": "จะไม่ยอมให้ใครมาจะไม่ยอมให้ใครรังแกจะไม่ยอมก้มหัวให้ใคร ไม่ว่าใครหน้าไหนจะไม่ยอมหยุด \nไม่ว่าจะสูงแค่ไหนก็ไปถึงไม่มีคำว่าสูง วัดได้หากใจถึงจะหนาวเหน็บหนาวเพียงไหนจะไปให้ถึงล้มลงแล้วก็ไม่กลัว"}, {"num": 4, "title": "ขวากหนาม", "artist": "ไฮเปอร์ (Hyper)", "lyrics": "ทางใดที่เธอจะมีความสุขกับเขา ทางนั้นจะมีฉันคอยกั้นกลาง\nเธอเป็นดอกไม้ ฉันจะเป็นขวากหนาม ทิ่มแทง ที่เขาจงปวดใจ\nที่เขาทิ้งเธอไป ที่เขาไม่รักเธอ\n\nฉันรู้ว่าเธอก็คงต้องการ ไปกับเขาและเธอก็ตัดสินใจ\nจากฉันไปเพื่อมีใคร เธอคงอยากพบรักที่ยิ่งใหญ่\nอยากให้รู้ไว้ ว่าฉันจะคอยขวางทาง"}, {"num": 5, "title": "อย่ามองตรงนั้น", "artist": "คริสติน่า อากีล่าร์", "lyrics": "อย่ามองตรงนั้น\nถ้ามองตรงนั้น จะเป็นเรื่องใหญ่\nอย่ามองอย่างนั้น\nอย่ามองอย่างนั้น\nถ้าอยากจะรักให้มองซะใหม่\nNa Na...."}, {"num": 6, "title": "ลื่น", "artist": "ทัช ณ ตะกั่วทุ่ง", "lyrics": "หรือปลาไหลสิงใจ เธอสับเปลี่ยนเร็วนัก รักหลายคนจนนับไม่ได้ กว่าจะรู้ว่าเธอ ลื่นอย่างกับปลาไหล รักแทบตายสุดท้ายหลุดมือ"}, {"num": 7, "title": "หัวงู", "artist": "เอ็ม สุรศักดิ์ วงษ์ไทย", "lyrics": "ระวังตัวไว้ให้ดีนะเธอ\nพวกหัวงูมันจ้องจะเข้ามาใกล้\nทำเป็นยิ้มหวานแต่ใจร้าย\nอย่าหลงกลไปเชื่อใจใครง่ายๆ"}, {"num": 8, "title": "ตกหลุมรัก", "artist": "หวาย (Waii)", "lyrics": "ตกหลุมรัก ขึ้นไม่ไหว\nเธอใช่ไหมเป็นคนผลักฉัน\nอย่ามาทำ หน้าอย่างนั้น\nนึกว่าฉันกลัวหรือไง\nบอกตรงๆ เธอนะเธอ\nเห็นทุกทีแล้วมันกวนใจ\nเกิดอาการหัวใจอ่อนไหว\nอยู่ใกล้เธอไม่เคยปลอดภัย\nเกิดอาการหัวใจหล่นหาย\nเก็บไปซะแล้วห้ามบอกใคร\nเพราะฉันชอบเธอ"}, {"num": 9, "title": "พูดไม่ค่อยเก่ง", "artist": "AB Normal", "lyrics": "ก็ยังเดาใจไม่ถูกอยากจะรู้ แต่ใครคนนึงรักเธอหมดทั้งหัวใจ\n\nอยากให้ฉันคนนี้ทำอะไร เพื่อให้เธอได้พอเข้าใจว่าฉันรักเธอ\n\nพูดไม่ค่อยเก่งแต่รักหมดใจ ถ้ารู้ว่าชอบอะไรจะหาให้เธอ\nพูดไม่ค่อยเก่งแต่ฉันรักเธอ อย่าปล่อยให้เผลอให้รักเธอข้างเดียว"}, {"num": 10, "title": "เงียบๆ คนเดียว", "artist": "เบิร์ด ธงไชย", "lyrics": "อยากจะมองฟ้าที่ว่างเปล่า เหงาเหงาคนเดียวลำพัง\nให้รอยร้าวมันเจือจาง ให้ใจมันดีกว่านี้บ้าง\nอยากให้เธอนั้นลืมทุกสิ่ง และทิ้งฉันไว้เพียงลำพัง\nฉันต้องการทบทวนบางอย่าง อยากอยู่เงียบเงียบคนเดียว"}, {"num": 11, "title": "สองรัก", "artist": "Zeal", "lyrics": "สองรัก ฉันรับไม่ไหวเธอมีหนึ่งใจให้ไปตั้งสองรักทั้งเขาและฉัน ฝันไปหรือเธอมีใครยอมทนบ้างไหมลืมตาตื่นมาสักทีเถอะสองหัวจิตหัวใจอย่างนี้ เลือกซักที"}, {"num": 12, "title": "พิจารณา", "artist": "Musketeers", "lyrics": "ว่ารักที่มีให้เธอมากกว่าดาวที่ลอยบนฟ้า\nไม่น้อยกว่านกอินทรีย์และมวลแมลงในท้องนภา\nมากกว่าพื้นดิน ไม่เท่าเม็ดทรายบนชายหาด\nและถ้ามันยังคงไม่พอให้เอาทะเลไปรวมกับเขา\nให้มีทั้งแสงและเงาละอองดอกไม้ที่ในอากาศ\nมีแค่เท่านี้ โปรดเธอพิจารณา"}, {"num": 13, "title": "แฟนใหม่หน้าคุ้น", "artist": "MAIYARAP feat. MILLI", "lyrics": "แฟนใหม่ดูหน้าคุ้น ๆ เหมือนคนที่คุณบอกว่าไม่มีอะไร\nยังจำได้ดีว่าในตอนนั้น เธอบอกกับฉันว่าจงเชื่อใจ\nยืนยัน ว่าแค่เพื่อนกัน จะโกหกฉันไปเพื่ออะไร\nสุดท้ายแล้วเป็นไง แฟนใหม่เธอหน้าคุ้นจัง"}, {"num": 14, "title": "บุษบา", "artist": "Moderndog", "lyrics": "บรรจงร้อยเป็นมาลัย สนุกสุขใจหนักหนา\nเป็นประจำทุกวันเวลา ไม่เคยเหนื่อยล้ากับมาลัย\n\nแล้วเธอตื่นมากับความผิดหวัง ในวันนี้\nโลกที่เคยดีไม่มีดอกไม้เหลืออยู่\nโลกสดใสมันเป็นอะไรก็ไม่รู้\nเห็นเห็นกันอยู่ จู่จู่ก็หายไป\nดอกไม้มันหายไป จากโลกอันกว้างใหญ่"}, {"num": 15, "title": "รักคือฝันไป", "artist": "สาว สาว สาว", "lyrics": "รักมิใช่ ดวงดาว เมื่อพราวแสง\nใช่ร้อนแรง ดั่งแสง อาทิตย์ส่อง\nรักมิใช่ภูผา สุดจับจอง\nใยใครมอง หารักกันทำไม\n\nรักของเธอ พาใจข้าเศร้าหมอง\nบางครั้งจอง ให้ใจ ฉันสุขสันต์\nเมื่อมีรัก ไม่จริง ใจต่อกัน\nทุกคืนวัน ผ่านมา ฉันฝันไป"}]};
+
+        const listKeys = Object.keys(quizData);
+        let currentListIdx = 0;
+        let currentSongNum = 1; // 1 to 15
+
+        // DOM Views
+        const homeView = document.getElementById('homeView');
+        const quizView = document.getElementById('quizView');
+        const homeListGrid = document.getElementById('homeListGrid');
+        const btnBackToHome = document.getElementById('btnBackToHome');
+        const btnHomeFullscreen = document.getElementById('btnHomeFullscreen');
+
+        // Quiz View Elements
+        const listTabsContainer = document.getElementById('listTabs');
+        const numberRowContainer = document.getElementById('numberRow');
+        const badgeRound = document.getElementById('badgeRound');
+        const badgeNumber = document.getElementById('badgeNumber');
+        const answerSong = document.getElementById('answerSong');
+        const answerArtist = document.getElementById('answerArtist');
+        const lyricsDisplay = document.getElementById('lyricsDisplay');
+        const lyricsScrollWrapper = document.getElementById('lyricsScrollWrapper');
+        const progressInfo = document.getElementById('progressInfo');
+        const btnPrev = document.getElementById('btnPrev');
+        const btnNext = document.getElementById('btnNext');
+        const btnFullscreen = document.getElementById('btnFullscreen');
+
+        // Switch Views
+        function showHomeView() {
+            quizView.style.display = 'none';
+            homeView.style.display = 'flex';
+        }
+
+        function showQuizView(listIndex = 0, songNum = 1) {
+            currentListIdx = listIndex;
+            currentSongNum = songNum;
+            homeView.style.display = 'none';
+            quizView.style.display = 'flex';
+            renderCurrentSlide();
+        }
+
+        // Build Home View Cards (List 1 to 7)
+        listKeys.forEach((name, idx) => {
+            const shortName = name.replace('🎵', '').replace('(15 เพลง)', '').trim();
+            const card = document.createElement('div');
+            card.className = 'home-list-card';
+            card.innerHTML = `
+                <div class="list-icon">🎵</div>
+                <div class="list-card-title">${shortName}</div>
+            `;
+            card.addEventListener('click', () => {
+                showQuizView(idx, 1);
+            });
+            homeListGrid.appendChild(card);
+        });
+
+        // 8th Button: "กรุณาเลือกลิสต์ที่ 1-7"
+        const card8 = document.createElement('div');
+        card8.className = 'home-list-card card-notice';
+        card8.innerHTML = `
+            <div class="list-icon notice-icon">ℹ️</div>
+            <div class="list-card-title" style="font-size: 1.1rem; color: #94a3b8;">กรุณาเลือกลิสต์ที่ 1-7</div>
+        `;
+        card8.addEventListener('click', () => {
+            alert('กรุณาเลือกลิสต์ที่ 1 ถึง 7 เพื่อเริ่มเล่นเกมครับ');
+        });
+        homeListGrid.appendChild(card8);
+
+        // Build Top Tabs in Quiz View
+        listKeys.forEach((name, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'list-tab-btn' + (idx === 0 ? ' active' : '');
+            const shortName = name.replace('🎵', '').replace('(15 เพลง)', '').trim();
+            btn.innerText = shortName;
+            btn.addEventListener('click', () => {
+                currentListIdx = idx;
+                renderCurrentSlide();
+            });
+            listTabsContainer.appendChild(btn);
+        });
+
+        // Build 1-15 Quick Jump Buttons
+        for (let i = 1; i <= 15; i++) {
+            const numBtn = document.createElement('button');
+            numBtn.className = 'song-num-btn' + (i === 1 ? ' active' : '');
+            numBtn.innerText = i;
+            numBtn.id = 'numBtn_' + i;
+            numBtn.addEventListener('click', () => {
+                currentSongNum = i;
+                renderCurrentSlide();
+            });
+            numberRowContainer.appendChild(numBtn);
+        }
+
+        function updateNavigationUI() {
+            // Update List Tabs
+            const tabs = listTabsContainer.querySelectorAll('.list-tab-btn');
+            tabs.forEach((tab, idx) => {
+                if (idx === currentListIdx) {
+                    tab.classList.add('active');
+                    tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+
+            // Update 1-15 Buttons
+            for (let i = 1; i <= 15; i++) {
+                const btn = document.getElementById('numBtn_' + i);
+                if (btn) {
+                    if (i === currentSongNum) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                }
+            }
+        }
+
+        function adjustLyricsFontSize(text) {
+            const lines = text.split('\n');
+            const lineCount = lines.length;
+            const maxLineLen = Math.max(...lines.map(l => l.length), 0);
+            const totalLen = text.length;
+
+            if (lineCount >= 10 || totalLen > 300) {
+                lyricsDisplay.style.fontSize = "clamp(1.3rem, 2.3vw, 1.85rem)";
+                lyricsDisplay.style.lineHeight = "1.5";
+            } else if (lineCount >= 7 || totalLen > 180 || maxLineLen > 38) {
+                lyricsDisplay.style.fontSize = "clamp(1.6rem, 2.9vw, 2.3rem)";
+                lyricsDisplay.style.lineHeight = "1.6";
+            } else if (lineCount >= 4 || totalLen > 90) {
+                lyricsDisplay.style.fontSize = "clamp(2rem, 3.6vw, 3rem)";
+                lyricsDisplay.style.lineHeight = "1.65";
+            } else {
+                lyricsDisplay.style.fontSize = "clamp(2.4rem, 4.4vw, 3.8rem)";
+                lyricsDisplay.style.lineHeight = "1.75";
+            }
+        }
+
+        function renderCurrentSlide() {
+            const currentListName = listKeys[currentListIdx];
+            const songsInList = quizData[currentListName] || [];
+            
+            let song = songsInList.find(s => s.num === currentSongNum);
+            if (!song && songsInList.length > 0) {
+                song = songsInList[0];
+                currentSongNum = song.num;
+            }
+            if (!song) return;
+
+            const shortRound = currentListName.replace('🎵', '').replace('(15 เพลง)', '').trim();
+            badgeRound.innerText = shortRound;
+            badgeNumber.innerText = `ข้อที่ ${song.num} / ${songsInList.length}`;
+
+            // Inline Answer
+            answerSong.innerText = song.title;
+            answerArtist.innerText = song.artist;
+
+            // Lyrics
+            const lyrics = song.lyrics || "(ไม่มีข้อความเนื้อเพลง)";
+            lyricsDisplay.innerText = lyrics;
+            adjustLyricsFontSize(lyrics);
+
+            lyricsScrollWrapper.scrollTop = 0;
+
+            progressInfo.innerText = `${shortRound} • ข้อที่ ${song.num} / ${songsInList.length}`;
+
+            updateNavigationUI();
+        }
+
+        // Strictly Loop within CURRENT list (1 to 15)
+        function nextSongInList() {
+            const currentListName = listKeys[currentListIdx];
+            const songsInList = quizData[currentListName] || [];
+            const maxSongs = songsInList.length || 15;
+
+            if (currentSongNum < maxSongs) {
+                currentSongNum++;
+            } else {
+                currentSongNum = 1;
+            }
+            renderCurrentSlide();
+        }
+
+        function prevSongInList() {
+            const currentListName = listKeys[currentListIdx];
+            const songsInList = quizData[currentListName] || [];
+            const maxSongs = songsInList.length || 15;
+
+            if (currentSongNum > 1) {
+                currentSongNum--;
+            } else {
+                currentSongNum = maxSongs;
+            }
+            renderCurrentSlide();
+        }
+
+        // Event Listeners
+        btnNext.addEventListener('click', nextSongInList);
+        btnPrev.addEventListener('click', prevSongInList);
+        btnBackToHome.addEventListener('click', showHomeView);
+
+        // Fullscreen Toggle
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => console.log(err));
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        btnFullscreen.addEventListener('click', toggleFullScreen);
+        btnHomeFullscreen.addEventListener('click', toggleFullScreen);
+
+        // Keyboard Shortcuts
+        window.addEventListener('keydown', (e) => {
+            // Only handle slide navigation if in quiz view
+            if (quizView.style.display === 'flex') {
+                if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+                    e.preventDefault();
+                    nextSongInList();
+                } else if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    prevSongInList();
+                } else if (e.key.toLowerCase() === 'f') {
+                    e.preventDefault();
+                    toggleFullScreen();
+                } else if (e.key.toLowerCase() === 'h' || e.key === 'Escape') {
+                    // Quick return home
+                    showHomeView();
+                } else if (!isNaN(e.key) && parseInt(e.key) >= 1 && parseInt(e.key) <= 9) {
+                    currentSongNum = parseInt(e.key);
+                    renderCurrentSlide();
+                }
+            } else {
+                if (e.key.toLowerCase() === 'f') {
+                    e.preventDefault();
+                    toggleFullScreen();
+                }
+            }
+        });
+
+        // Start at Home View
+        showHomeView();
+    </script>
+</body>
+</html>
